@@ -1,4 +1,3 @@
-// import React from 'react'
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import SearchPageVideoCard from "./SearchPageVideoCard";
@@ -27,7 +26,6 @@ const SearchResultsPage = () => {
         }`
       );
       const result = await response.json();
-      console.log(result);
       setLoading(false);
       setCurrentPageInfo(result);
       setQueryResultsList((prev) => [...prev, ...result.items]);
@@ -35,48 +33,7 @@ const SearchResultsPage = () => {
     getSearchResults();
   }, [resultsPerPage, urlDecodedQuery, pageToken]);
 
-  // const handleInfiniteScroll = () => {
-  //   // console.log(currentPageInfo);
-  //   if (currentPageInfo.pageInfo.totalResults === queryResults.length) {
-  //     setEndOfPage(true);
-  //     return;
-  //   }
-
-  //   const isScrollNearBottom =
-  //     document.documentElement.scrollTop + window.innerHeight + 1 >=
-  //     document.documentElement.scrollHeight;
-
-  //   if (
-  //     currentPageInfo.pageInfo.totalResults !== queryResults.length &&
-  //     isScrollNearBottom
-  //   ) {
-  //     setLoading(true);
-  //     setPageToken(currentPageInfo.nextPageToken);
-
-  //     const remainingReslts =
-  //       currentPageInfo.pageInfo.totalResults - queryResults.length;
-  //     if (10 > remainingReslts) {
-  //       setResultsPerPage(remainingReslts);
-  //     }
-  //   }
-  // };
-
   useEffect(() => {
-    // const handleScroll = () => {
-    //   handleInfiniteScroll();
-    // };
-
-    // const debounce = (handleScroll, delayTime) => {
-    //   let timeOut;
-    //   return () => {
-    //     clearTimeout(timeOut);
-    //     timeOut = setTimeout(() => {
-    //       handleScroll();
-    //     }, delayTime);
-    //   };
-    // };
-
-    // const debouncedScroll = debounce(handleScroll, 200);
     window.addEventListener("scroll", () => {
       infiniteScroll(
         currentPageInfo,
@@ -106,7 +63,11 @@ const SearchResultsPage = () => {
   return queryResultsList.length === 0 ? (
     <></>
   ) : (
-    <div className={`${isMenuOpen ? "sm:ml-56" : "sm:mx-3"} px-1 sm:px-10`}>
+    <div
+      className={`w-full ${
+        isMenuOpen ? "sm:ml-56" : "sm:mx-3"
+      } px-1 sm:px-10 mb-10`}
+    >
       {queryResultsList.map((result, index) => (
         <SearchPageVideoCard result={result} key={index} />
       ))}

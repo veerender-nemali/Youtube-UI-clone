@@ -20,7 +20,7 @@ const ModalSearchBar = ({ searchHandler }) => {
             />
           </svg>
         </button>
-        <SearchBar />
+        <SearchBar searchHandler={searchHandler} />
       </div>
     </div>
   );

@@ -1,16 +1,17 @@
 // import React from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
-import { cacheResults } from "./utils/slices/searchSlice";
+import { cacheResults, setSearchInpValue } from "./utils/slices/searchSlice";
 import { Link, useNavigate } from "react-router-dom";
 
-const SearchBar = () => {
+const SearchBar = ({ searchHandler }) => {
+  const searchInpValue = useSelector((store) => store.search.searchInpValue);
   const dispatch = useDispatch();
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState(searchInpValue);
   const [suggestions, setSuggestions] = useState([]);
   const [searchSuggestions, setSearchSuggestions] = useState(false);
   const [hideSearchResults, setHideSearchResults] = useState(true);
-  const searchCache = useSelector((store) => store.search);
+  const searchCache = useSelector((store) => store.search.searchResults);
   const navigate = useNavigate();
   const screenSize = useSelector((store) => store.screenSize);
 
@@ -19,6 +20,8 @@ const SearchBar = () => {
       event.preventDefault(); // Prevents the default behavior (form submission)
       navigate(`/search?q=${searchQuery}`);
       setHideSearchResults(false);
+      dispatch(setSearchInpValue(searchQuery));
+      searchHandler();
     }
   };
 
@@ -74,7 +77,14 @@ const SearchBar = () => {
             />
 
             <Link to={`/search?q=${searchQuery}`}>
-              <button className="rounded-r-full p-2 px-4 sm:p-[0.62rem] sm:px-5  border-gray-400 border bg-gray-50">
+              <button
+                className="rounded-r-full p-2 px-4 sm:p-[0.62rem] sm:px-5  border-gray-400 border bg-gray-50"
+                onClick={() =>
+                  screenSize.width < 640 &&
+                  searchHandler() &&
+                  dispatch(setSearchInpValue(searchQuery))
+                }
+              >
                 <svg
                   className=""
                   xmlns="http://www.w3.org/2000/svg"
@@ -106,6 +116,8 @@ const SearchBar = () => {
                     setSearchQuery(suggestion);
                     navigate(`/search?q=${suggestion}`);
                     setSearchSuggestions(false);
+                    searchHandler();
+                    dispatch(setSearchInpValue(suggestion));
                   }}
                 >
                   <img

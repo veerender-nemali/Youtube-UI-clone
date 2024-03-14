@@ -10,6 +10,9 @@ const Header = () => {
   const dispatch = useDispatch();
   const screenSize = useSelector((store) => store.screenSize);
   const [smallScreenSearchBar, setSmallScreenSearchBar] = useState(false);
+  const searchInpValue = useSelector((store) => store.search.searchInpValue);
+
+  console.log(searchInpValue);
 
   const toggleMenuHandler = () => {
     dispatch(toggleMenu());
@@ -20,23 +23,34 @@ const Header = () => {
   };
 
   return (
-    <div className="flex items-center justify-between fixed bg-white z-10 w-full py-2 sm:py-0 px-1 ">
-      <div className="flex items-center mr-2 w-40 ">
-        <img
-          src={HamburgerMenu}
-          alt="HamburgerMenuLogo"
-          className="h-7 sm:h-8 pl-2 cursor-pointer"
-          onClick={toggleMenuHandler}
-        />
+    <div className="flex items-center justify-between fixed bg-white z-10 w-full py-2 sm:py-0 sm:px-1 ">
+      <div className="sm:flex sm:items-center sm:mr-2 sm:w-40 ">
+        {screenSize.width >= 640 && (
+          <img
+            src={HamburgerMenu}
+            alt="HamburgerMenuLogo"
+            className="h-7 sm:h-8 ml-2 cursor-pointer"
+            onClick={toggleMenuHandler}
+          />
+        )}
 
         <Link to={"/"}>
           <img
             src="https://logos-world.net/wp-content/uploads/2020/04/YouTube-Emblem.png"
             alt="YoutubeLogo"
-            className="h-6 sm:h-7 pl-5"
+            className="h-6 sm:h-7 ml-[10px] sm:ml-5"
           />
         </Link>
       </div>
+
+      {screenSize.width < 640 && searchInpValue && (
+        <div
+          className="border border-gray-400 p-[6px] mx-1 cursor-text rounded-3xl w-[60%]"
+          onClick={searchHandler}
+        >
+          {searchInpValue}
+        </div>
+      )}
 
       {screenSize.width < 640 ? (
         <>

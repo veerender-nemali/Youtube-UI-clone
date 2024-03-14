@@ -66,7 +66,7 @@ const VideoContainer = () => {
     <VideoCardUI />
   ) : (
     <div className={`w-full ${isMenuOpen ? "sm:ml-56" : "sm:mx-3"}`}>
-      <div className="grid grid-cols-17 px-2">
+      <div className="grid grid-cols-17 px-2 sm:px-6">
         {videosInfoList.map((video) => (
           <Link
             key={video.id}

@@ -92,11 +92,11 @@ const RecommendedVideosList = ({ watchPageVideoId }) => {
                 />
               </div>
 
-              <div>
+              <div className="mt-1">
                 <h2 className=" font-semibold line-clamp-2">
                   {vid.snippet.title}
                 </h2>
-                <p className="line-clamp-1">{vid.snippet.channelTitle}</p>
+                <p className="line-clamp-1 mt-1">{vid.snippet.channelTitle}</p>
               </div>
             </div>
           </Link>

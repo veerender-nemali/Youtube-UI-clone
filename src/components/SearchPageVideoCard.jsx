@@ -11,7 +11,7 @@ const SearchPageVideoCard = ({ result }) => {
     <>
       {/* to={"/watch?v=" + video.id + "&channel=" + video.snippet.channelId} */}
       <div
-        className="flex p-1 my-3"
+        className="flex gap-2 p-1 sm:my-2"
         onClick={() => {
           navigate(
             "/watch?v=" +

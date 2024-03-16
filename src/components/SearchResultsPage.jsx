@@ -16,6 +16,11 @@ const SearchResultsPage = () => {
   const [resultsPerPage, setResultsPerPage] = useState(10);
   const urlDecodedQuery = decodeURIComponent(searchParams.get("q"));
   const isMenuOpen = useSelector((store) => store.menu.isMenuOpen);
+  const [searchQuery, setSearchQuery] = useState(null);
+
+  if (!searchQuery) {
+    setSearchQuery(urlDecodedQuery);
+  }
 
   // console.log(currentPageInfo);
   useEffect(() => {
@@ -27,8 +32,15 @@ const SearchResultsPage = () => {
       );
       const result = await response.json();
       setLoading(false);
-      setCurrentPageInfo(result);
-      setQueryResultsList((prev) => [...prev, ...result.items]);
+      if (urlDecodedQuery === searchQuery) {
+        setCurrentPageInfo(result);
+        setQueryResultsList((prev) => [...prev, ...result.items]);
+      } else {
+        setCurrentPageInfo(result);
+        setQueryResultsList(result.items);
+        setPageToken(null);
+        setSearchQuery(urlDecodedQuery);
+      }
     };
     getSearchResults();
   }, [resultsPerPage, urlDecodedQuery, pageToken]);

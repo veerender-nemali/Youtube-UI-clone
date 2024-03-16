@@ -1,7 +1,7 @@
 import HamburgerMenu from "../assets/hamburgermenu.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleMenu } from "./utils/slices/MenuSlice";
-import { Link } from "react-router-dom";
+import { Link, useMatch } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import ModalSearchBar from "./ModalSearchBar";
 import { useState } from "react";
@@ -11,8 +11,9 @@ const Header = () => {
   const screenSize = useSelector((store) => store.screenSize);
   const [smallScreenSearchBar, setSmallScreenSearchBar] = useState(false);
   const searchInpValue = useSelector((store) => store.search.searchInpValue);
+  const match = useMatch("/search");
 
-  console.log(searchInpValue);
+  // console.log(match);
 
   const toggleMenuHandler = () => {
     dispatch(toggleMenu());
@@ -43,7 +44,7 @@ const Header = () => {
         </Link>
       </div>
 
-      {screenSize.width < 640 && searchInpValue && (
+      {screenSize.width < 640 && searchInpValue && match && (
         <div
           className="border border-gray-400 p-[6px] mx-1 cursor-text rounded-3xl w-[60%]"
           onClick={searchHandler}

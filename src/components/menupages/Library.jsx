@@ -56,7 +56,7 @@ const FormPlayList = ({ setIsModalOpen }) => {
         className="fixed inset-0 bg-black opacity-20 z-40"
         onClick={() => setIsModalOpen(false)}
       ></div>
-      <div className=" w-full flex  flex-col rounded-xl gap-4 p-3 bg-white z-50">
+      <div className=" w-full sm:w-3/4 md:w-2/4 lg:w-1/4 flex  flex-col rounded-xl gap-4 p-3 bg-white z-50">
         <h1 className="font-bold">New Playlist</h1>
         <input
           value={inpValue}
@@ -65,14 +65,22 @@ const FormPlayList = ({ setIsModalOpen }) => {
           placeholder="Enter Title"
           className="p-1 outline-none border-b-black border border-x-0 border-t-0"
         />
-        <button
-          className="bg-slate-200 w-1/2 m-auto p-1 rounded-xl"
-          onClick={() => {
-            inpValue !== "" && createPlayListHandler();
-          }}
-        >
-          Create a playlist
-        </button>
+        <div className="flex justify-around">
+          <button
+            className="bg-gray-200 w-1/4  m-auto p-1 rounded-xl  hover:bg-gray-100"
+            onClick={() => setIsModalOpen(false)}
+          >
+            Cancel
+          </button>
+          <button
+            className="bg-gray-200 w-1/4 m-auto p-1 rounded-xl  hover:bg-gray-100"
+            onClick={() => {
+              inpValue !== "" && createPlayListHandler();
+            }}
+          >
+            Create
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -100,7 +108,10 @@ const Library = () => {
       <div className="sm:flex sm:justify-between">
         <h1 className="text-lg sm:text-xl">Playlists</h1>
         {screenSize.width > 640 && (
-          <button className="w-40 bg-gray-200 rounded-xl  hover:bg-gray-100 py-1">
+          <button
+            className="w-40 bg-gray-200 rounded-2xl  hover:bg-gray-100 py-1"
+            onClick={playlistFormHandler}
+          >
             Create a Playlist
           </button>
         )}

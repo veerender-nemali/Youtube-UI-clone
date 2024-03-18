@@ -15,7 +15,7 @@ const About = ({ info }) => {
 
   // console.log(info);
   return (
-    <div className="px-5 let">
+    <div className="px-5 mb-3">
       <div>
         <h1 className="font-bold text-lg ">About</h1>
         <p className="mt-2">{info.snippet.description}</p>
